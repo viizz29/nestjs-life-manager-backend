@@ -1,4 +1,10 @@
-import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+  Column,
+  DataType,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
 
 @Table({
   tableName: 'data_nodes',
@@ -21,4 +27,10 @@ export class DataNode extends Model {
 
   @Column
   note!: string;
+
+  @Column({
+    type: DataType.JSON,
+    allowNull: true,
+  })
+  attributes!: Record<string, unknown> | null;
 }

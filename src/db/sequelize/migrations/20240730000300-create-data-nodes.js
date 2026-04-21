@@ -40,6 +40,11 @@ module.exports = {
             allowNull: false,
           },
 
+          attributes: {
+            type: Sequelize.JSON,
+            allowNull: true,
+          },
+
           created_at: {
             allowNull: false,
             type: Sequelize.DATE,

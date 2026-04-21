@@ -14,11 +14,13 @@ import { ChatModule } from './chat/chat.module';
 import { DataNodesModule } from './data-nodes/data-nodes.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 
 const imports = [
   AuthModule,
   UsersModule,
   DataNodesModule,
+  BookmarksModule,
   SequelizeModule.forRoot({
     dialect: 'postgres', // or 'mysql', 'sqlite', etc.
     host: 'localhost',
