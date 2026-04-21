@@ -10,12 +10,15 @@ export const ProcessedIdParam = createParamDecorator(
     const request = ctx.switchToHttp().getRequest();
     const value = request.params[param.name];
 
-    const newValue: number[] = decodeValue(value);
+    try {
+      const newValue: number[] = decodeValue(value);
 
-    if (newValue.length != param.len) {
+      if (newValue.length != param.len) {
+        throw new Error();
+      }
+      return newValue;
+    } catch (err) {
       throw new BadRequestException(`Invalid value for ${param.name}`);
     }
-
-    return newValue;
   },
 );

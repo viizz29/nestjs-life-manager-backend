@@ -3,9 +3,21 @@ import { DataNodeRepository } from './data-nodes.repository';
 
 @Injectable()
 export class DataNodesService {
-  constructor(private readonly roomRepo: DataNodeRepository) {}
+  constructor(private readonly dataNodeRepo: DataNodeRepository) {}
 
   async findAllByUserIdAndParentSn(userId: number, parentSn: number | null) {
-    return this.roomRepo.findAllByUserIdAndParentSn(userId, parentSn);
+    return this.dataNodeRepo.findAllByUserIdAndParentSn(userId, parentSn);
+  }
+
+  async createDataNode(userId: number, note: string, parentSn: number) {
+    return this.dataNodeRepo.createDataNode(userId, note, parentSn);
+  }
+
+  async deleteDataNode(userId: number, sn: number) {
+    return this.dataNodeRepo.deleteByUserIdAndSn(userId, sn);
+  }
+
+  async updateNote(userId: number, sn: number, note: string) {
+    return this.dataNodeRepo.updateNote(userId, sn, note);
   }
 }

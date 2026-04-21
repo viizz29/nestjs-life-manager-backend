@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { API_BASE_URL, DOCS_URL, PORT } from './config';
+import { API_BASE_URL, APP_ENV, DOCS_URL, PORT } from './config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { DecodeIdPipe } from './common/decode-id.pipe';
 import { EncodeIdInterceptor } from './common/encode-id.interceptor';
@@ -40,14 +40,18 @@ async function bootstrap() {
         description: 'Enter JWT token',
         in: 'header',
       },
-      'access-token', // 👈 name (used later)
+      'bearerAuth', // 👈 name (used later)
     ) // Adds the "Authorize" button for JWT
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
   // Setup the UI at the /api endpoint
-  SwaggerModule.setup(DOCS_URL, app, document);
+  SwaggerModule.setup(DOCS_URL, app, document, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: `${APP_ENV}`,
+    customJs: `/assets/swagger-init.js`,
+  });
 
   // Enable CORS for all origins
   app.enableCors();

@@ -14,7 +14,7 @@ export class AuthController {
     return 'auth test';
   }
 
-  @ApiOperation({summary: 'Register a new user'})
+  @ApiOperation({ summary: 'Register a new user' })
   @Post('register')
   register(@Body() body: CreateUserDto) {
     return this.authService.register(body.name, body.email, body.password);
@@ -22,7 +22,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'User Login' })
   @ApiBody({ type: LoginDto })
-  @ApiResponse({ status: 200, description: 'Return JWT access token.' })
+  @ApiResponse({ status: 201, description: 'Return JWT access token.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @Post('login')
   login(@Body() body: LoginDto) {

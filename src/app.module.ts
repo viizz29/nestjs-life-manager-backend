@@ -12,6 +12,8 @@ import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ChatModule } from './chat/chat.module';
 import { DataNodesModule } from './data-nodes/data-nodes.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 const imports = [
   AuthModule,
@@ -29,6 +31,9 @@ const imports = [
     define: {
       underscored: true, // This automatically maps isActive to is_active globally
     },
+  }),
+  ServeStaticModule.forRoot({
+    rootPath: join(__dirname, '..', 'public'),
   }),
 ];
 
