@@ -54,7 +54,7 @@ export class DataNodesController {
 
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth('bearerAuth')
-  @Post('today')
+  @Get('today')
   @ApiOperation({
     summary:
       'Create or get today date node under life/year/month/day hierarchy',
