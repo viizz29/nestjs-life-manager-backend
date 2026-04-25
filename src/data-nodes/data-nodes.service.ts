@@ -44,4 +44,8 @@ export class DataNodesService {
   ) {
     return this.dataNodeRepo.updateAttributes(userId, sn, attributes);
   }
+
+  async getFullPath(userId: number, sn: number) {
+    return this.dataNodeRepo.getFullPath(userId, sn);
+  }
 }

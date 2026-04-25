@@ -185,4 +185,19 @@ export class DataNodesController {
 
     return this.dataNodesService.updateAttributes(userId, nodeSn, attributes);
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth('bearerAuth')
+  @ApiOperation({ summary: 'get the full path of a node' })
+  @ApiParam({ name: 'id', required: true, type: String })
+  @Get(':id/path')
+  async getPath(
+    @ProcessedIdParam({ name: 'id', len: 2 }) id: [number, number],
+    @CurrentUser() user: JwtUser,
+  ) {
+    const [, nodeSn] = id;
+    const { userId } = user;
+
+    return this.dataNodesService.getFullPath(userId, nodeSn);
+  }
 }

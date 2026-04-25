@@ -386,4 +386,35 @@ export class DataNodeRepository {
 
     return this.findOneByUserIdAndSn(userId, updatedRecord.get('sn'));
   }
+
+  async getFullPath(userId: number, sn: number) {
+    // recursively find the nodes until parentsn is null
+    const nodes: DataNode[] = [];
+
+    let currentNodeSn: number = sn;
+
+    while (currentNodeSn) {
+      const node = await this.dataNodeModel.findOne({
+        attributes: [
+          [fn('json_build_array', col('user_id'), col('sn')), 'id'],
+          'note',
+          'parentSn',
+        ],
+        where: {
+          userId,
+          sn: currentNodeSn,
+        },
+        raw: true,
+      });
+
+      console.log({ node });
+
+      if (!node) break;
+
+      nodes.push(node);
+      currentNodeSn = node?.parentSn;
+    }
+
+    return nodes.map((item) => ({ id: item.id, note: item.note })).reverse();
+  }
 }
