@@ -48,4 +48,11 @@ export class DataNodesService {
   async getFullPath(userId: number, sn: number) {
     return this.dataNodeRepo.getFullPath(userId, sn);
   }
+
+  async reorderNodes(
+    userId: number,
+    nodes: { sn: number; position: number }[],
+  ) {
+    return this.dataNodeRepo.reorderNodes(userId, nodes);
+  }
 }

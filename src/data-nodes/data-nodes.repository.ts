@@ -201,6 +201,7 @@ export class DataNodeRepository {
           userId,
           parentSn,
         },
+        order: [['position', 'ASC']],
       });
     }
     return this.dataNodeModel.findAll({
@@ -416,5 +417,26 @@ export class DataNodeRepository {
     }
 
     return nodes.map((item) => ({ id: item.id, note: item.note })).reverse();
+  }
+
+  async reorderNodes(
+    userId: number,
+    nodes: { sn: number; position: number }[],
+  ) {
+    return this.sequelize.transaction(async (transaction) => {
+      for (const node of nodes) {
+        await this.dataNodeModel.update(
+          { position: node.position },
+          {
+            where: {
+              userId,
+              sn: node.sn,
+            },
+            transaction,
+          },
+        );
+      }
+      return { success: true };
+    });
   }
 }

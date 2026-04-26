@@ -22,6 +22,7 @@ import { CreateDataNodeDto } from './dto/create-data-node.dto';
 import { SearchDataNodesDto } from './dto/search-data-nodes.dto';
 import { UpdateDataNodeAttributesDto } from './dto/update-data-node-attributes.dto';
 import { UpdateDataNodePositionDto } from './dto/update-data-node-position.dto';
+import { ReorderDataNodesDto } from './dto/reorder-data-nodes.dto';
 
 @Controller('v1/data-nodes')
 export class DataNodesController {
@@ -81,6 +82,29 @@ export class DataNodesController {
     return this.dataNodesService.findAllByUserIdAndParentSn(
       user.userId,
       parentSn,
+    );
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth('bearerAuth')
+  @Post('reorder')
+  @ApiOperation({ summary: 'reorder nodes' })
+  reorderNodes(
+    @CurrentUser() user: JwtUser,
+    @Body() body: ReorderDataNodesDto,
+  ) {
+    const { userId } = user;
+
+    const { nodes } = body;
+
+    console.log(nodes);
+
+    return this.dataNodesService.reorderNodes(
+      userId,
+      nodes.map((item) => ({
+        sn: item.id[1],
+        position: item.position,
+      })),
     );
   }
 

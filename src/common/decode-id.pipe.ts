@@ -69,7 +69,11 @@ export class DecodeIdPipe implements PipeTransform {
       metadata.type === 'body'
       // || metadata.type === 'param'
     ) {
-      return transformDeep(value);
+      const newValue = transformDeep(value);
+
+      // console.log(newValue);
+
+      return newValue;
     }
     // else if (metadata.type == 'param') {
     //   const newValue = isIdField(metadata.data as string)
