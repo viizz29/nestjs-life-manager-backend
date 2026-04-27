@@ -55,4 +55,8 @@ export class DataNodesService {
   ) {
     return this.dataNodeRepo.reorderNodes(userId, nodes);
   }
+
+  async getNodeBySn(userId: number, sn: number) {
+    return this.dataNodeRepo.findOneByUserIdAndSn(userId, sn);
+  }
 }

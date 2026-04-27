@@ -146,7 +146,7 @@ export class DataNodesController {
   @ApiOperation({ summary: 'move a node to another parent' })
   @ApiParam({ name: 'id', required: true, type: String })
   @ApiParam({ name: 'parentId', required: true, type: String })
-  @Patch(':id/moveto/:parentId')
+  @Patch(':id/move-to/:parentId')
   async moveToParent(
     @ProcessedIdParam({ name: 'id', len: 2 }) id: [number, number],
     @ProcessedIdParam({ name: 'parentId', len: 2 }) parentId: [number, number],
@@ -174,6 +174,33 @@ export class DataNodesController {
     const { position } = body;
 
     return this.dataNodesService.updatePosition(userId, nodeSn, position);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth('bearerAuth')
+  @ApiOperation({ summary: 'get details of a data node' })
+  @ApiParam({ name: 'id', required: false, type: String })
+  @Get(':id/get')
+  async getNodeById(
+    @ProcessedIdParam({ name: 'id', len: 2, optional: true })
+    id: [number, number],
+    @CurrentUser() user: JwtUser,
+  ) {
+    if (id) {
+      const [, nodeSn] = id;
+      const { userId } = user;
+      return this.dataNodesService.getNodeBySn(userId, nodeSn);
+    } else {
+      return {
+        id: [user.userId, 0],
+        note: 'root',
+        parent_id: null,
+        attributes: null,
+        position: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
