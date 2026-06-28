@@ -4,18 +4,20 @@ import {
   DB_USERNAME,
   FRONTEND_BUILD_PATH,
   SOCKETIO_ENDPOINT_ON,
-} from '../config';
+} from '../../config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from '../modules/auth/auth.module';
-import { UsersModule } from '../modules/users/users.module';
+import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from '../users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ChatModule } from '../modules/chat/chat.module';
-import { DataNodesModule } from '../modules/data-nodes/data-nodes.module';
+import { ChatModule } from '../chat/chat.module';
+import { DataNodesModule } from '../data-nodes/data-nodes.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { BookmarksModule } from '../modules/bookmarks/bookmarks.module';
+import { BookmarksModule } from '../bookmarks/bookmarks.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 const imports = [
   AuthModule,
@@ -47,6 +49,6 @@ if (SOCKETIO_ENDPOINT_ON) {
 @Module({
   imports,
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}

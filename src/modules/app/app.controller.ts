@@ -3,16 +3,19 @@ import { AppService } from './app.service';
 import { join } from 'path';
 import { PROJECT_LOCATION } from 'src/config';
 import { type Response } from 'express';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Public()
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
 
+  @Public()
   @Get('swagger-init.js')
   serveJsFile(@Res() res: Response) {
     // Resolve the path to your JS file

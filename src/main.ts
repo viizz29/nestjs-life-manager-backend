@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
+import { AppModule } from './modules/app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { API_BASE_URL, APP_ENV, DOCS_URL, PORT } from './config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -51,7 +51,7 @@ async function bootstrap() {
   SwaggerModule.setup(DOCS_URL, app, document, {
     customCss: '.swagger-ui .topbar { display: none }',
     customSiteTitle: `${APP_ENV}`,
-    customJs: `/assets/swagger-init.js`,
+    customJs: `/api/swagger-init.js`,
   });
 
   // Enable CORS for all origins

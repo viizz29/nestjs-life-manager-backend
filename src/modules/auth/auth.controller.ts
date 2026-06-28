@@ -3,6 +3,7 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('auth') // Groups these endpoints under "auth" in the UI
 @Controller('v1/auth')
@@ -20,6 +21,7 @@ export class AuthController {
     return this.authService.register(body.name, body.email, body.password);
   }
 
+  @Public()
   @ApiOperation({ summary: 'User Login' })
   @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 201, description: 'Return JWT access token.' })
