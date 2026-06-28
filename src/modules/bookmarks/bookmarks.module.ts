@@ -4,7 +4,7 @@ import { Bookmark } from './bookmarks.model';
 import { BookmarksRepository } from './bookmarks.repository';
 import { BookmarksService } from './bookmarks.service';
 import { BookmarksController } from './bookmarks.controller';
-import { DataNode } from 'src/data-nodes/data-nodes.model';
+import { DataNode } from 'src/modules/data-nodes/data-nodes.model';
 
 @Module({
   imports: [SequelizeModule.forFeature([Bookmark, DataNode])],

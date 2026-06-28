@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { QueryTypes } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Bookmark } from './bookmarks.model';
-import { DataNode } from 'src/data-nodes/data-nodes.model';
+import { DataNode } from 'src/modules/data-nodes/data-nodes.model';
 
 @Injectable()
 export class BookmarksRepository {
